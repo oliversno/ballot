@@ -23,5 +23,5 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 </script>
-<h1> I tried adding some html, does this work?</h1?
+<h1> I tried adding some html, does this work?</h1>
 </body>
