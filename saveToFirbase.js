@@ -1,15 +1,12 @@
+var firebase = require('firebase');
+
 function saveToFirebase(info) {
     var infoObject = {
         info: info
     };
-
-    firebase.database().ref('subscription-entries').push().set(infoObject)
-        .then(function(snapshot) {
-            success(); // some success method
-        }, function(error) {
-            console.log('error' + error);
-            error(); // some error method
-        });
+    var tokensRef = firebase.database().ref("tokens/");
+    tokensRef.push().set(infoObject);
+    return alert("pushed");
 }
 
 saveToFirebase(info);
