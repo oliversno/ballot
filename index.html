@@ -1,10 +1,15 @@
 <body>
   <div class="container">
-       <header class="header">
-           This is a database push test. Hopefully this works now.
-        </header>
-        <form class ="make-ballot">
-          <button class="btn" type="button" onClick="storeToken(5)">Make ballot!</button>
+        <form id="make-ballot">
+          <input type="radio" name="ballotType" id="fptp" value="First Past the Post">
+          <label for="fptp">First Past the Post</label><br>
+          <input type="radio" name="ballotType" id="ranked-choice" value="Ranked Choice">
+          <label for="ranked-choice">Ranked Choice</label><br>
+          <input type="radio" name="ballotType" id="approval" value="Approval Voting">
+          <label for="approval">Approval Voting</label><br>
+
+
+          <button class="btn" type="button" onClick="createBallot(document.getElementById('make-ballot'))">Make ballot!</button>
         </form>
     </div> <!-- container -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -28,11 +33,18 @@ measurementId: "G-Y8X924EG6M"
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function storeToken(length){
-  var token = generate_token(length);
-  var tokensRef = firebase.database().ref("tokens/");
-  tokensRef.set(token);
-  return alert(token);
+function createBallot(form){
+  var ballotType = form.elements.ballotType.value;
+  var token = generate_token(5);
+  firebaseStore(token, ballotType);
+}
+
+function firebaseStore(token, ballotType){
+
+  firebase.database().ref('ballots/' + token).set({
+    ballotType: ballotType
+  });
+  return alert('saved' + token + ballotType);
 }
 
 function generate_token(length){
