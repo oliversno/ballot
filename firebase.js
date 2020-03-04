@@ -1,3 +1,5 @@
+import { initializeApp, analytics, database } from 'firebase';
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
 apiKey: "AIzaSyByAyDFaMNDwKpfRhAQPk0B70ILYst-oS4",
@@ -12,8 +14,6 @@ measurementId: "G-Y8X924EG6M"
 // Initialize Firebase
 initializeApp(firebaseConfig);
 analytics();
-
-import { initializeApp, analytics, database } from 'firebase';
 
 function saveToFirebase(info) {
     var infoObject = {
