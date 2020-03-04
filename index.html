@@ -3,13 +3,9 @@
        <header class="header">
            This is a database push test. Hopefully this works now.
         </header>
-        
-        <form class="form-test">
-          <h2 class="form-test-heeading">Enter a username (not a real one)</h2>
-          <label for="inputUsername" class="sr-only">Username</label>
-          <input type="text" id="usernameInput" class="form-control" placeholder="Username" required autofocus>
-          <button class="btn btn-lg btn-primary btn-block" type="submit" onClick="saveToFirebase(document.getElementById('usernameInput').value)">Enter!</button>
-         </form>
+        <form class ="make-ballot">
+          <button class="btn" type="button" onClick="storeToken(5)">Make ballot!</button>
+        </form>
     </div> <!-- container -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
@@ -32,13 +28,22 @@ measurementId: "G-Y8X924EG6M"
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function saveToFirebase(info) {
-    var infoObject = {
-        text: info
-    };
-    var tokensRef = firebase.database().ref("tokens/");
-    tokensRef.push().set(infoObject);
-    return alert("pushed");
+function storeToken(length){
+  var token = generate_token(length);
+  var tokensRef = firebase.database().ref("tokens/");
+  tokensRef.set(token);
+  return alert(token);
+}
+
+function generate_token(length){
+    //edit the token allowed characters
+    var a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    var b = [];  
+    for (var i=0; i<length; i++) {
+        var j = (Math.random() * (a.length-1)).toFixed(0);
+        b[i] = a[j];
+    }
+    return b.join("");
 }
 
 </script>
