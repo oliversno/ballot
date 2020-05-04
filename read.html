@@ -2,7 +2,7 @@
 
 <div class="container">
     <input id="tokenInput" type="text" value="token?">
-    <button class="btn" type="button" onclick="firebaseRead(document.getElementById('tokenInput').value)">Read</button>
+    <button id="read" class="btn" type="button">Read</button>
 </div>
 
 
@@ -30,11 +30,33 @@ measurementId: "G-Y8X924EG6M"
 firebase.initializeApp(firebaseConfig);
 
 function firebaseRead(token){
-    return firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
+    firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
         var candidates = (snapshot.val() && snapshot.val().candidates);
-});
+    });
+    return ballotType, candidates
 }
+
+$(function () {
+    $("#read").bind("click", function () {
+        var token = document.getElementById('tokenInput').value
+        firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
+            var ballotType = (snapshot.val() && snapshot.val().ballotType);
+            var candidates = (snapshot.val() && snapshot.val().candidates);
+            if(ballotType == "First Past the Post"){
+                for(i in candidates){
+                    alert(candidates[i])
+                }
+            }
+            else if(ballotType == "Ranked Choice"){
+
+            }
+            else if(ballotType == "Approval Voting"){
+
+            }
+        });
+    });
+});
 
 </script>
 </body>
