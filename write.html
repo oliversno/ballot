@@ -15,7 +15,7 @@
           <button class="btn" type="button" onClick="createBallot(document.getElementById('make-ballot'))">Make ballot!</button>
         </form>
     </div> <!-- container -->
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -42,7 +42,6 @@ function createBallot(form){
   var ballotType = form.elements.ballotType.value;
   var fields = document.querySelectorAll('[id^=candidate]');
   var candidates = [];
-  var i;
   for(var i=1; i < fields.length; i++){
     candidates.push(fields[i].value);
   }
