@@ -54,7 +54,11 @@ $(function () {
                 }
             }
             else if(ballotType == "Ranked Choice"){
-                
+                for(i in candidates){
+                    var div = $("<div />");
+                    div.html(getRanking(candidates[i], candidates.length));
+                    $("#voteContainer").append(div);
+                }
             }
             else if(ballotType == "Approval Voting"){
                 for(i in candidates){
@@ -75,6 +79,15 @@ function getRadio(candidate) {
 function getCheck(candidate) {
     return '<input name="candidates" id="' + candidate + '" type="checkbox"/>' + 
         '<label for="' + candidate + '">' + candidate + '</label><br>'
+}
+
+function getRanking(candidate, n) {
+    var header = '<p>' + candidate + ': </p>'
+    for(var i=0; i < n; i++){
+        header += '<input name="rankButton" id="' + i + '" type="radio"/>' +
+            '<label for="' + i + '">' + (i+1) + '<\label>'
+    }
+    return header
 }
 
 </script>
