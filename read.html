@@ -2,7 +2,7 @@
 
 <div class="container">
     <input id="tokenInput" type="text" value="token?">
-    <button id="read" class="btn" type="button">Read</button>
+    <button id="read" class="btn" type="button" onclick="fetchBallot()">Read</button>
     <div id="voteContainer">
         <!-- Voting here -->
     </div>
@@ -32,44 +32,48 @@ measurementId: "G-Y8X924EG6M"
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function firebaseRead(token){
+function fetchBallot(){
+    var token = document.getElementById('tokenInput').value
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
+        //TODO check if token is invalid
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
         var candidates = (snapshot.val() && snapshot.val().candidates);
+        clearBallot("voteContainer");
+        // TODO Warn user about clearing ballot
+        if(ballotType == "First Past the Post"){
+            for(i in candidates){
+                var div = $("<div />");
+                div.html(getRadio(candidates[i]));
+                $("#voteContainer").append(div);
+            }
+        }
+        else if(ballotType == "Ranked Choice"){
+            for(i in candidates){
+                var div = $("<div />");
+                div.html(getRanking(candidates[i], candidates.length));
+                $("#voteContainer").append(div);
+            }
+        }
+        else if(ballotType == "Approval Voting"){
+            for(i in candidates){
+                var div = $("<div />");
+                div.html(getCheck(candidates[i]));
+                $("#voteContainer").append(div);
+            }
+        }
+        $("#voteContainer").append(
+            '<button id="castVote" class="btn" type="button"' +
+            'onclick="castBallot(document.getElementById("voteContainer"))">Vote!</button>');
     });
-    return ballotType, candidates
 }
 
-$(function () {
-    $("#read").bind("click", function () {
-        var token = document.getElementById('tokenInput').value
-        firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
-            var ballotType = (snapshot.val() && snapshot.val().ballotType);
-            var candidates = (snapshot.val() && snapshot.val().candidates);
-            if(ballotType == "First Past the Post"){
-                for(i in candidates){
-                    var div = $("<div />");
-                    div.html(getRadio(candidates[i]));
-                    $("#voteContainer").append(div);
-                }
-            }
-            else if(ballotType == "Ranked Choice"){
-                for(i in candidates){
-                    var div = $("<div />");
-                    div.html(getRanking(candidates[i], candidates.length));
-                    $("#voteContainer").append(div);
-                }
-            }
-            else if(ballotType == "Approval Voting"){
-                for(i in candidates){
-                    var div = $("<div />");
-                    div.html(getCheck(candidates[i]));
-                    $("#voteContainer").append(div);
-                }
-            }
-        });
-    });
-});
+function castBallot(ballot){
+
+}
+
+function clearBallot(elementID) {
+    document.getElementById(elementID).innerHTML = "";
+}
 
 function getRadio(candidate) {
     return '<input name="candidates" id="' + candidate + '" type="radio"/>' + 
@@ -82,12 +86,13 @@ function getCheck(candidate) {
 }
 
 function getRanking(candidate, n) {
-    var header = '<p>' + candidate + ': </p>'
+    var selection = '<p>' + candidate + ': </p>'
+    // TODO use jquery UI sortable
     for(var i=0; i < n; i++){
-        header += '<input name="rankButton" id="' + i + '" type="radio"/>' +
-            '<label for="' + i + '">' + (i+1) + '<\label>'
+        selection += '<input name="rankButton' + candidate + '" id="' + candidate + i + '" type="radio"/>' +
+            '<label for="' + candidate + i + '">' + (i+1) + '<\label>'
     }
-    return header
+    return selection
 }
 
 </script>
