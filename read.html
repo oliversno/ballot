@@ -3,6 +3,9 @@
 <div class="container">
     <input id="tokenInput" type="text" value="token?">
     <button id="read" class="btn" type="button">Read</button>
+    <div id="voteContainer">
+        <!-- Voting here -->
+    </div>
 </div>
 
 
@@ -45,18 +48,34 @@ $(function () {
             var candidates = (snapshot.val() && snapshot.val().candidates);
             if(ballotType == "First Past the Post"){
                 for(i in candidates){
-                    alert(candidates[i])
+                    var div = $("<div />");
+                    div.html(getRadio(candidates[i]));
+                    $("#voteContainer").append(div);
                 }
             }
             else if(ballotType == "Ranked Choice"){
-
+                
             }
             else if(ballotType == "Approval Voting"){
-
+                for(i in candidates){
+                    var div = $("<div />");
+                    div.html(getCheck(candidates[i]));
+                    $("#voteContainer").append(div);
+                }
             }
         });
     });
 });
+
+function getRadio(candidate) {
+    return '<input name="candidates" id="' + candidate + '" type="radio"/>' + 
+        '<label for="' + candidate + '">' + candidate + '</label><br>'
+}
+
+function getCheck(candidate) {
+    return '<input name="candidates" id="' + candidate + '" type="checkbox"/>' + 
+        '<label for="' + candidate + '">' + candidate + '</label><br>'
+}
 
 </script>
 </body>
