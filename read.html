@@ -3,8 +3,10 @@
 <div class="container">
     <input id="tokenInput" type="text" value="token?">
     <button id="read" class="btn" type="button" onclick="fetchBallot()">Read</button>
-    <div id="voteContainer">
-        <!-- Voting here -->
+    <div id="ballot">
+        <div id="voteContainer">
+            <!-- Voting here -->
+        </div>
     </div>
 </div>
 
@@ -61,14 +63,19 @@ function fetchBallot(){
                 $("#voteContainer").append(div);
             }
         }
-        $("#voteContainer").append(
-            '<button id="castVote" class="btn" type="button"' +
-            'onclick="castBallot(document.getElementById("voteContainer"))">Vote!</button>');
+        $("#ballot").append('<button id="castVote" class="btn" type="button">Vote!</button>');
+        $("#castVote").bind("click", function () {
+            //TODO
+            if (ballotType == "First Past the Post" || ballotType == "Approval Voting"){
+                var votes = document.getElementsByName('candidates')
+                for(var i=0; i < votes.length; i++){
+                    if(votes[i].value == "on"){
+                        //vote for votes[i].id
+                    }
+                }
+            }
+        });
     });
-}
-
-function castBallot(ballot){
-
 }
 
 function clearBallot(elementID) {
