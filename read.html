@@ -39,27 +39,27 @@ function fetchBallot(){
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         //TODO check if token is invalid
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
-        var candidates = (snapshot.val() && snapshot.val().candidates);
+        var candidates = (snapshot.val() && snapshot.val().candidateDict);
         clearBallot("voteContainer");
         // TODO Warn user about clearing ballot
         if(ballotType == "First Past the Post"){
-            for(i in candidates){
+            for(candidate in candidates){
                 var div = $("<div />");
-                div.html(getRadio(candidates[i]));
+                div.html(getRadio(candidate));
                 $("#voteContainer").append(div);
             }
         }
         else if(ballotType == "Ranked Choice"){
-            for(i in candidates){
+            for(candidate in candidates){
                 var div = $("<div />");
-                div.html(getRanking(candidates[i], candidates.length));
+                div.html(getRanking(candidate, candidates.length));
                 $("#voteContainer").append(div);
             }
         }
         else if(ballotType == "Approval Voting"){
-            for(i in candidates){
+            for(candidate in candidates){
                 var div = $("<div />");
-                div.html(getCheck(candidates[i]));
+                div.html(getCheck(candidate));
                 $("#voteContainer").append(div);
             }
         }
@@ -69,8 +69,10 @@ function fetchBallot(){
             if (ballotType == "First Past the Post" || ballotType == "Approval Voting"){
                 var votes = document.getElementsByName('candidates')
                 for(var i=0; i < votes.length; i++){
-                    if(votes[i].value == "on"){
+                    if(votes[i].checked){
                         //vote for votes[i].id
+                        var key = 'ballots/' + token + '/candidateDict/' + votes[i].id;
+                        firebase.database().ref(key).set(firebase.database.FieldValue.increment(1));
                     }
                 }
             }
