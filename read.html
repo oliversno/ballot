@@ -12,11 +12,11 @@
 
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14/firebase-app.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14/firebase-database.js"></script>
 <!-- JQuery -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
@@ -72,7 +72,8 @@ function fetchBallot(){
                     if(votes[i].checked){
                         //vote for votes[i].id
                         var key = 'ballots/' + token + '/candidateDict/' + votes[i].id;
-                        firebase.database().ref(key).set(firebase.database.FieldValue.increment(1));
+                        //TODO prevent from voting twice
+                        firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
                     }
                 }
             }
