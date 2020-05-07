@@ -70,8 +70,7 @@ function fetchBallot(){
                 var votes = document.getElementsByName('candidates')
                 for(var i=0; i < votes.length; i++){
                     if(votes[i].checked){
-                        //vote for votes[i].id
-                        var key = 'ballots/' + token + '/candidateDict/' + votes[i].id;
+                        var key = 'ballots/' + token + '/candidateDict/' + votes[i].id + '/0';
                         //TODO prevent from voting twice
                         firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
                     }
