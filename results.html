@@ -3,7 +3,10 @@
     <input id="tokenInput" type="text" value="token?">
     <button id="read" class="btn" type="button" onclick="fetchResults()">Get Results</button>
     <div id="displayRawData">
-
+        <!-- raw data here -->
+    </div>
+    <div id="displayWinner">
+        <!-- Winner Here -->
     </div>
 </div>
 
@@ -33,6 +36,7 @@ firebase.initializeApp(firebaseConfig);
 
 function fetchResults(){
     var token = document.getElementById('tokenInput').value;
+    //TODO make update in realtime
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
@@ -40,12 +44,20 @@ function fetchResults(){
             for(var key in candidates){
                 $("#displayRawData").append(getVotes(key, candidates[key]));
             }
+            $("#displayWinner").append(
+                '<h1>The Winnner is: ' + getWinner(candidates) + '</h1>');
         }
     });
 }
 
 function getVotes(name, num){
     return '<p>' + name + ':' + num + '</p>'
+}
+
+function getWinner(candidates){
+    return Object.keys(candidates).reduce(function(a, b) { 
+        return candidates[a] > candidates[b] ? a : b 
+    });
 }
 
 </script>
