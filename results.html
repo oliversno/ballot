@@ -2,6 +2,9 @@
 <div class="container">
     <input id="tokenInput" type="text" value="token?">
     <button id="read" class="btn" type="button" onclick="fetchResults()">Get Results</button>
+    <div id="displayRawData">
+
+    </div>
 </div>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -33,7 +36,16 @@ function fetchResults(){
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
+        if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
+            for(var key in candidates){
+                $("#displayRawData").append(getVotes(key, candidates[key]));
+            }
+        }
     });
+}
+
+function getVotes(name, num){
+    return '<p>' + name + ':' + num + '</p>'
 }
 
 </script>
