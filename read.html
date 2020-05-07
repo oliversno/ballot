@@ -19,6 +19,12 @@
 <script src="https://www.gstatic.com/firebasejs/7.14/firebase-database.js"></script>
 <!-- JQuery -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<!-- JQuery UI -->
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<!-- JQuery UI Touch Punch -->
+<!-- TODO check if ranked choice works on mobile
+    make dropdown versionn for acsesability -->
+<script src="jquery.ui.touch-punch.min.js"></script>
 <script>
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -44,23 +50,18 @@ function fetchBallot(){
         // TODO Warn user about clearing ballot
         if(ballotType == "First Past the Post"){
             for(candidate in candidates){
-                var div = $("<div />");
-                div.html(getRadio(candidate));
-                $("#voteContainer").append(div);
+                $("#voteContainer").append(getRadio(candidate));
             }
         }
         else if(ballotType == "Ranked Choice"){
             for(candidate in candidates){
-                var div = $("<div />");
-                div.html(getRanking(candidate, candidates.length));
-                $("#voteContainer").append(div);
+                $("#voteContainer").append(getRanking(candidate));
             }
+            $("#voteContainer").sortable();
         }
         else if(ballotType == "Approval Voting"){
             for(candidate in candidates){
-                var div = $("<div />");
-                div.html(getCheck(candidate));
-                $("#voteContainer").append(div);
+                $("#voteContainer").append(getCheck(candidate));
             }
         }
         $("#ballot").append('<button id="castVote" class="btn" type="button">Vote!</button>');
@@ -70,11 +71,17 @@ function fetchBallot(){
                 var votes = document.getElementsByName('candidates')
                 for(var i=0; i < votes.length; i++){
                     if(votes[i].checked){
-                        var key = 'ballots/' + token + '/candidateDict/' + votes[i].id + '/0';
+                        var key = 'ballots/' + token + '/candidateDict/' + votes[i].id;
                         //TODO prevent from voting twice
                         firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
                     }
                 }
+            }
+            else { //ranked choice
+                var rankedOrder = $("#voteContainer").sortable('toArray');
+                var firstChoice = rankedOrder[0];
+                var key = 'ballots/' + token + '/candidateDict/' + firstChoice;
+                firebase.database().ref(key).push(rankedOrder.slice(1));
             }
         });
     });
@@ -94,14 +101,9 @@ function getCheck(candidate) {
         '<label for="' + candidate + '">' + candidate + '</label><br>'
 }
 
-function getRanking(candidate, n) {
-    var selection = '<p>' + candidate + ': </p>'
-    // TODO use jquery UI sortable
-    for(var i=0; i < n; i++){
-        selection += '<input name="rankButton' + candidate + '" id="' + candidate + i + '" type="radio"/>' +
-            '<label for="' + candidate + i + '">' + (i+1) + '<\label>'
-    }
-    return selection
+function getRanking(candidate) {
+    return '<li name="candidateRanking" id="' + candidate + '">' + 
+        candidate + '</li>'
 }
 
 </script>

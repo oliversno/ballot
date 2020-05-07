@@ -52,7 +52,7 @@ function createBallot(form){
 function firebaseStore(token, ballotType, candidates){
   var candidateDict = {};
   for(var i=0; i < candidates.length; i++){
-    candidateDict[candidates[i]] = [0]
+    candidateDict[candidates[i]] = 0
   }
   firebase.database().ref('ballots/' + token).set({
     ballotType: ballotType,
