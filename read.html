@@ -48,6 +48,9 @@ function fetchBallot(){
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
         clearBallot("voteContainer");
         // TODO Warn user about clearing ballot
+        // TODO don't allow voting twice on one ballot, make the page refresh
+        var key = 'ballots/' + token + '/numVotes'
+        firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
         if(ballotType == "First Past the Post"){
             for(candidate in candidates){
                 $("#voteContainer").append(getRadio(candidate));

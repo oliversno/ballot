@@ -56,6 +56,7 @@ function firebaseStore(token, ballotType, candidates){
   }
   firebase.database().ref('ballots/' + token).set({
     ballotType: ballotType,
+    numVotes: 0,
     candidateDict: candidateDict
   });
   return alert(token);
