@@ -40,12 +40,17 @@ function fetchResults(){
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
+        var numVotes = (snapshot.val() $$ snapshot.val.numVotes);
         if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
             for(var key in candidates){
                 $("#displayRawData").append(getVotes(key, candidates[key]));
             }
             $("#displayWinner").append(
                 '<h1>The Winnner is: ' + getWinner(candidates) + '</h1>');
+        }
+        else{ //ranked choice
+
+            }
         }
     });
 }
@@ -58,6 +63,39 @@ function getWinner(candidates){
     return Object.keys(candidates).reduce(function(a, b) { 
         return candidates[a] > candidates[b] ? a : b 
     });
+}
+
+function getWinnerRanked(candidates, numVotes){
+    var majorityWinner, majorityLoser = simpleMajorityRanked(candidates, numVotes);
+    if(majorityWinner != ""){
+        return majorityWinner
+    }
+    // else
+    for(vote in candidates[majorityLoser]){
+        //reaportion
+    }
+}
+
+function simpleMajorityRanked(candidates, numVotes){
+    var majority = Math.ceil(numVotes / 2.0);
+    var leastVotes = Number.MAX_SAFE_INTEGER;
+    var leastCandidate = "";
+    for(var key in candidates){
+        var numVotes = 0;
+        if(candidates[key] != 0){
+            numVotes = candidates[key].length;
+            // we only care about reapropriating votes if a candidate got votes
+            if(numVotes < leastVotes){
+                leastVotes = numVotes;
+                leastCandidate = key;
+            }
+        }
+        //todo check what happens when majority rounded and not
+        if(numVotes >= majority){
+            return key, null
+        }
+    }
+    return "", leastCandidate
 }
 
 </script>
