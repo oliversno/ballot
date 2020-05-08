@@ -66,13 +66,21 @@ function getWinner(candidates){
 }
 
 function getWinnerRanked(candidates, numVotes){
-    var majorityWinner, majorityLoser = simpleMajorityRanked(candidates, numVotes);
-    if(majorityWinner != ""){
-        return majorityWinner
-    }
-    // else
-    for(vote in candidates[majorityLoser]){
-        //reaportion
+    var majorityWinner = "";
+    var majorityLoser = "";
+    while(majorityWinner == ""){
+        majorityWinner, majorityLoser = simpleMajorityRanked(candidates, numVotes);
+        if(majorityWinner != ""){
+            return majorityWinner
+        }
+        // else
+        for(vote in candidates[majorityLoser]){
+            //reaportion
+            var nextCandidate = vote[0];
+            vote.splice(0,1); //remove first element
+            candidates[nextCandidate].push(vote);
+        }
+        candidates[majorityLoser] = 0; //clear votes from loser
     }
 }
 
@@ -92,7 +100,7 @@ function simpleMajorityRanked(candidates, numVotes){
         }
         //todo check what happens when majority rounded and not
         if(numVotes >= majority){
-            return key, null
+            return key, ""
         }
     }
     return "", leastCandidate
