@@ -35,12 +35,15 @@ measurementId: "G-Y8X924EG6M"
 firebase.initializeApp(firebaseConfig);
 
 function fetchResults(){
-    var token = document.getElementById('tokenInput').value;
+    var token = document.getElementById('tokenInput').value.toUpperCase();
     //TODO make update in realtime
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
+        if(ballotType == null){ ballotTypeError(); }
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
+        if(candidates == null){ candidatesError(); }
         var numVotes = (snapshot.val() && snapshot.val.numVotes);
+        if(numVotes == null){ numVotesError(); }
         if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
             for(var key in candidates){
                 $("#displayRawData").append(getVotes(key, candidates[key]));

@@ -41,11 +41,13 @@ measurementId: "G-Y8X924EG6M"
 firebase.initializeApp(firebaseConfig);
 
 function fetchBallot(){
-    var token = document.getElementById('tokenInput').value
+    var token = document.getElementById('tokenInput').value.toUpperCase();
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         //TODO check if token is invalid
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
+        if(ballotType == null){ ballotTypeError(); }
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
+        if(candidates == null){ candidatesError(); }
         clearBallot("voteContainer");
         // TODO Warn user about clearing ballot
         // TODO don't allow voting twice on one ballot, make the page refresh
