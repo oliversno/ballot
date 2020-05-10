@@ -69,13 +69,11 @@ function fetchBallot(){
         }
         $("#ballot").append('<button id="castVote" class="btn" type="button">Vote!</button>');
         $("#castVote").bind("click", function () {
-            //TODO
             if (ballotType == "First Past the Post" || ballotType == "Approval Voting"){
                 var votes = document.getElementsByName('candidates')
                 for(var i=0; i < votes.length; i++){
                     if(votes[i].checked){
                         var key = 'ballots/' + token + '/candidateDict/' + votes[i].id;
-                        //TODO prevent from voting twice
                         firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
                     }
                 }
@@ -86,6 +84,8 @@ function fetchBallot(){
                 var key = 'ballots/' + token + '/candidateDict/' + firstChoice;
                 firebase.database().ref(key).push(rankedOrder.slice(1));
             }
+            // prevent from voting twice
+            reloadPage();
         });
     });
 }
@@ -107,6 +107,10 @@ function getCheck(candidate) {
 function getRanking(candidate) {
     return '<li name="candidateRanking" id="' + candidate + '">' + 
         candidate + '</li>'
+}
+
+function reloadPage(){
+    window.location.reload();
 }
 
 </script>

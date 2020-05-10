@@ -40,7 +40,7 @@ function fetchResults(){
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
-        var numVotes = (snapshot.val() $$ snapshot.val.numVotes);
+        var numVotes = (snapshot.val() && snapshot.val.numVotes);
         if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
             for(var key in candidates){
                 $("#displayRawData").append(getVotes(key, candidates[key]));
@@ -49,8 +49,8 @@ function fetchResults(){
                 '<h1>The Winnner is: ' + getWinner(candidates) + '</h1>');
         }
         else{ //ranked choice
-
-            }
+            $("#displayWinner").append(
+                '<h1>The Winnner is: ' + getWinnerRanked(candidates, numVotes) + '</h1>');
         }
     });
 }
