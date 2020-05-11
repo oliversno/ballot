@@ -41,7 +41,7 @@ function fetchResults(){
         if(ballotType == null){ ballotTypeError(); }
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
         if(candidates == null){ candidatesError(); }
-        var numVotes = (snapshot.val() && snapshot.val.numVotes);
+        var numVotes = (snapshot.val() && snapshot.val().numVotes);
         if(numVotes == null){ numVotesError(); }
         if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
             for(var key in candidates){
