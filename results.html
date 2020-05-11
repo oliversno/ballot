@@ -1,7 +1,5 @@
-<body>
+<body onload="fetchResults();">
 <div class="container">
-    <input id="tokenInput" type="text" placeholder="token" autofocus minlength="5" maxlength="5">
-    <button id="read" class="btn" type="button" onclick="fetchResults()">Get Results</button>
     <div id="displayRawData">
         <!-- raw data here -->
     </div>
@@ -35,7 +33,8 @@ measurementId: "G-Y8X924EG6M"
 firebase.initializeApp(firebaseConfig);
 
 function fetchResults(){
-    var token = document.getElementById('tokenInput').value.toUpperCase();
+    var urlParams = new URLSearchParams(window.location.search);
+    var token = urlParams.get('token').toUpperCase();
     //TODO make update in realtime
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
         var ballotType = (snapshot.val() && snapshot.val().ballotType);
