@@ -95,6 +95,9 @@ function clearBallot(elementID) {
 
 function linkToBallot(token){
   return '<p>The token is ' + token + '</p>' +
+  '<p>To vote visit</p>' +
+  '<a href="/write?token=' + token + '">' + 
+    window.location.hostname + ':' + window.location.port + '/write?token=' + token + '</a>' +
   '<form>' +
     '<input type="hidden" name="token" value="' + token + '"</input>' +
     '<button id="linkToBallot" class="btn" type="submit"' +
