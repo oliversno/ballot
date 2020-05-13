@@ -57,7 +57,8 @@ function firebaseStore(token, ballotType, candidates){
   firebase.database().ref('ballots/' + token).set({
     ballotType: ballotType,
     numVotes: 0,
-    candidateDict: candidateDict
+    candidateDict: candidateDict,
+    time: firebase.database.ServerValue.TIMESTAMP
   });
   clearBallot('make-ballot');
   $(".Container").append(linkToBallot(token));
