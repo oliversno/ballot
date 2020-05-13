@@ -91,6 +91,7 @@ function fetchBallot(){
                 timeLastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
             // prevent from voting twice
+            //TODO with token in URL query this no longer works
             reloadPage();
         });
     });

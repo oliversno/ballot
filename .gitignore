@@ -2,7 +2,8 @@ node_modules
 _site.firebaserc
 database.rules.json
 firebase.json
-functions/
+functions/*
+!function/index.js
 npm-debug.log
 package.json
 .firebaserc
