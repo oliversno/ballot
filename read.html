@@ -85,6 +85,11 @@ function fetchBallot(){
                 var key = 'ballots/' + token + '/candidateDict/' + firstChoice;
                 firebase.database().ref(key).push(rankedOrder.slice(1));
             }
+            // update time
+            var key = 'ballots/' + token;
+            firebase.database().ref(key).update({
+                timeLastUpdated: firebase.database.ServerValue.TIMESTAMP
+            });
             // prevent from voting twice
             reloadPage();
         });

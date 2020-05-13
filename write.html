@@ -58,7 +58,7 @@ function firebaseStore(token, ballotType, candidates){
     ballotType: ballotType,
     numVotes: 0,
     candidateDict: candidateDict,
-    timeCreated: firebase.database.ServerValue.TIMESTAMP
+    timeLastUpdated: firebase.database.ServerValue.TIMESTAMP
   });
   clearBallot('make-ballot');
   $(".Container").append(linkToBallot(token));
