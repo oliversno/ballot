@@ -13,7 +13,7 @@ exports.deleteOldItems = functions.database.ref('/ballots')
   return oldItemsQuery.on('child_added', function(data) {
     // create a map with all children that need to be removed
     var updates = {};
-    updates[data] = null
+    updates[data.key] = null
     // execute all updates in one go and return the result to end the function
     return ref.update(updates);
   });
