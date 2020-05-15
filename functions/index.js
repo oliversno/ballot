@@ -8,7 +8,7 @@ exports.deleteOldItems = functions.database.ref('/ballots')
 .onWrite((change, context) => { //onWrite because having a schedualed job costs $0.10 a month
   var ref = change.after.ref.parent; // reference to the items
   var now = Date.now();
-  var cutoff = now - 30 * 1000; //older than 30 sec
+  var cutoff = now - 7 * 24 * 60 * 60 * 1000; //ballot hasn't been voted on in one week
   var oldItemsQuery = ref.orderByChild('timeLastUpdated').endAt(cutoff);
   return oldItemsQuery.on('child_added', function(data) {
     // create a map with all children that need to be removed
