@@ -1,18 +1,20 @@
 <body>
   <div class="container">
-        <form id="make-ballot">
+        <form id="make-ballot" onsubmit="createBallot(document.getElementById('make-ballot')); return false;">
           <input id="candidateAdd" type="button" value="Add Candidate (+)"><br>
           <div id="TextBoxContainer">
+            <!-- TODO check for injection attack -->
+            <input required id="candidate" name = "candidateTextBox" type="text"/>
             <!--Textboxes will be added here -->
           </div>
-          <input type="radio" name="ballotType" id="fptp" value="First Past the Post">
+          <input required type="radio" name="ballotType" id="fptp" value="First Past the Post">
           <label for="fptp">First Past the Post</label><br>
-          <input type="radio" name="ballotType" id="ranked-choice" value="Ranked Choice">
+          <input required type="radio" name="ballotType" id="ranked-choice" value="Ranked Choice">
           <label for="ranked-choice">Ranked Choice</label><br>
-          <input type="radio" name="ballotType" id="approval" value="Approval Voting">
+          <input required type="radio" name="ballotType" id="approval" value="Approval Voting">
           <label for="approval">Approval Voting</label><br>
 
-          <button class="btn" type="button" onClick="createBallot(document.getElementById('make-ballot'))">Make ballot!</button>
+          <button class="btn" type="submit">Make ballot!</button>
         </form>
     </div> <!-- container -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -78,15 +80,15 @@ function generate_token(length){
 $(function () {
     $("#candidateAdd").bind("click", function () {
         var div = $("<div />");
-        div.html(GetDynamicTextBox(""));
+        div.html(GetDynamicTextBox());
         $("#TextBoxContainer").append(div);
     });
     $("body").on("click", ".remove", function () {
         $(this).closest("div").remove();
     });
 });
-function GetDynamicTextBox(value) {
-    return '<input id="candidate" name = "DynamicTextBox" type="text" value = "' + value + '" />&nbsp;' +
+function GetDynamicTextBox() {
+    return '<input required id="candidate" name = "DynamicTextBox" type="text" />&nbsp;' +
             '<input type="button" value="-" class="remove" />'
 }
 
