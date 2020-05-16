@@ -48,8 +48,6 @@ function fetchBallot(){
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
         if(candidates == null){ candidatesError(); }
         clearBallot("voteContainer");
-        var key = 'ballots/' + token + '/numVotes'
-        firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
         if(ballotType == "First Past the Post"){
             for(candidate in candidates){
                 $("#voteContainer").append(getRadio(candidate));
@@ -79,10 +77,21 @@ function fetchBallot(){
             }
             else { //ranked choice
                 var rankedOrder = $("#voteContainer").sortable('toArray');
+                var confirmStr = 'Your vote will be saved as:\n';
+                for(var i=0; i < rankedOrder.length; i++){
+                    confirmStr += (i+1) + '. ' + rankedOrder[i] + '\n';
+                }
+                confirmStr += 'Is this correct?';
+                if( !confirm(confirmStr)){
+                    return;
+                }
                 var firstChoice = rankedOrder[0];
                 var key = 'ballots/' + token + '/candidateDict/' + firstChoice;
                 firebase.database().ref(key).push(rankedOrder.slice(1));
             }
+            // increment number of votes
+            var key = 'ballots/' + token + '/numVotes'
+            firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
             // update time
             var key = 'ballots/' + token;
             firebase.database().ref(key).update({
