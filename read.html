@@ -48,8 +48,6 @@ function fetchBallot(){
         var candidates = (snapshot.val() && snapshot.val().candidateDict);
         if(candidates == null){ candidatesError(); }
         clearBallot("voteContainer");
-        // TODO Warn user about clearing ballot
-        // TODO don't allow voting twice on one ballot, make the page refresh
         var key = 'ballots/' + token + '/numVotes'
         firebase.database().ref(key).set(firebase.database.ServerValue.increment(1));
         if(ballotType == "First Past the Post"){
@@ -90,9 +88,9 @@ function fetchBallot(){
             firebase.database().ref(key).update({
                 timeLastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
-            // prevent from voting twice
-            //TODO with token in URL query this no longer works
-            reloadPage();
+            // prevent from voting twice by redirect to another page
+            //TODO double confirm vote before redirect
+            location.href = "/votecast.html";
         });
     });
 }
