@@ -3,7 +3,7 @@
         <form id="make-ballot" onsubmit="createBallot(document.getElementById('make-ballot')); return false;">
           <input id="candidateAdd" type="button" value="Add Candidate (+)"><br>
           <div id="TextBoxContainer">
-            <!-- TODO check for injection attack -->
+            <!-- At least two candidates are required on a ballot -->
             <input required id="candidate" name = "candidateTextBox" type="text"/><br>
             <input required id="candidate" name = "candidateTextBox" type="text"/>
             <!--Textboxes will be added here -->
@@ -46,7 +46,13 @@ function createBallot(form){
   var fields = document.querySelectorAll('[id^=candidate]');
   var candidates = [];
   for(var i=1; i < fields.length; i++){
-    candidates.push(fields[i].value);
+    var sanitizedInput = sanitize(fields[i].value); // prevent injection attack
+    if(!sanitizedInput || !sanitizedInput.trim()){ // check if sanitized string is empty
+      alert("All the characters in the candidate name " + fields[i].value + 
+      " are removed to prevent injection attack please add alphanumeric characters");
+      return
+    }
+    candidates.push(sanitizedInput);
   }
   var token = generate_token(5);
   firebaseStore(token, ballotType, candidates);
@@ -107,6 +113,26 @@ function linkToBallot(token){
     '<button id="linkToBallot" class="btn" type="submit"' +
     'formaction="/results.html?token=">View Results</button>' +
   '</form>'
+}
+
+function sanitize(inputStr){
+  // remove . # $ / [ and ] because they cause key errors
+  // remove \ & < > " ' : ; because they can cause xss vulnerabilities
+  inputStr = inputStr.replace(/"/g, "&quot");
+  inputStr = inputStr.replace(/#/g, "&35");
+  inputStr = inputStr.replace(/\$/g, "&36");
+  inputStr = inputStr.replace(/&/g, "&amp");
+  inputStr = inputStr.replace(/'/g, "&39");
+  inputStr = inputStr.replace(/\./g, "&46");
+  inputStr = inputStr.replace(/\//g, "&47");
+  inputStr = inputStr.replace(/:/g, "&58");
+  inputStr = inputStr.replace(/;/g, "&59");
+  inputStr = inputStr.replace(/</g, "&lt");
+  inputStr = inputStr.replace(/>/g, "&gt");
+  inputStr = inputStr.replace(/\[/g, "&91");
+  inputStr = inputStr.replace(/\\/g, "&92");
+  inputStr = inputStr.replace(/\]/g, "&93");
+  return inputStr
 }
 
 </script>

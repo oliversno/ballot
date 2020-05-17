@@ -67,6 +67,7 @@ function fetchBallot(){
         $("#ballot").append('<button id="castVote" class="btn" type="button">Vote!</button>');
         $("#castVote").bind("click", function () {
             if (ballotType == "First Past the Post" || ballotType == "Approval Voting"){
+                //TODO check ballot with user for this type
                 var votes = document.getElementsByName('candidates')
                 for(var i=0; i < votes.length; i++){
                     if(votes[i].checked){
@@ -98,7 +99,6 @@ function fetchBallot(){
                 timeLastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
             // prevent from voting twice by redirect to another page
-            //TODO double confirm vote before redirect
             location.href = "/votecast.html";
         });
     });
@@ -121,10 +121,6 @@ function getCheck(candidate) {
 function getRanking(candidate) {
     return '<li name="candidateRanking" id="' + candidate + '">' + 
         candidate + '</li>'
-}
-
-function reloadPage(){
-    window.location.reload();
 }
 
 </script>
