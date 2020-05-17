@@ -1,6 +1,6 @@
 <body>
   <div class="container">
-        <form id="make-ballot" onsubmit="createBallot(document.getElementById('make-ballot')); return false;">
+        <form id="make-ballot">
           <input id="candidateAdd" type="button" value="Add Candidate (+)"><br>
           <div id="TextBoxContainer">
             <!-- At least two candidates are required on a ballot -->
@@ -15,7 +15,7 @@
           <input required type="radio" name="ballotType" id="approval" value="Approval Voting">
           <label for="approval">Approval Voting</label><br>
 
-          <button class="btn" type="submit">Make ballot!</button>
+          <button class="btn" type="button" onclick="createBallot(document.getElementById('make-ballot'))">Make ballot!</button>
         </form>
     </div> <!-- container -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
