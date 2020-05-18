@@ -39,6 +39,7 @@ measurementId: "G-Y8X924EG6M"
 firebase.initializeApp(firebaseConfig);
 
 function fetchBallot(){
+    //TODO only works on firefox to fix
     var urlParams = new URLSearchParams(window.location.search);
     var token = urlParams.get('token').toUpperCase();
     firebase.database().ref('ballots/' + token).once('value').then(function(snapshot) {
