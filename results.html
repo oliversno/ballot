@@ -6,6 +6,9 @@
     <div id="displayWinner">
         <!-- Winner Here -->
     </div>
+    <div id="notice">
+        <!-- Notice Information -->
+    </div>
 </div>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -79,11 +82,12 @@ function getWinnerRanked(candidates, numVotes){
         }
         // else
         for(loser in majorityLosers){
+            //TODO append message to #notices if this is first tie
             for(vote in candidates[loser]){
                 //reaportion
                 var nextCandidate = vote[0];
-                while(nextCandidate in majorityLosers){
-                    //while vote will be reaportioned to loser in tie go to next choice
+                while(candidates[nextCandidate] = 0){
+                    //while vote will be reaportioned to eliminated candidate go to next choice
                     vote.splice(0,1);
                     nextCandidate = vote[0];
                 }
@@ -91,6 +95,13 @@ function getWinnerRanked(candidates, numVotes){
                 candidates[nextCandidate].push(vote);
             }
             candidates[loser] = 0; //clear votes from loser
+        }
+        // check if all candidateds are eliminated
+        if(allEliminated(candidates)){
+            $("#notice").append(
+                '<p>All candidates eliminated</p>'
+            );
+            //TODO reaportion all to 2nd choice
         }
     }
 }
@@ -117,6 +128,13 @@ function simpleMajorityRanked(candidates, numTotalVotes){
         }
     }
     return ["", leastCandidates]
+}
+
+function allEliminated(candidates){
+    for(key in candidates){
+        if(candidates[key] != 0){ return false; }
+    }
+    return true;
 }
 
 </script>

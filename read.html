@@ -59,6 +59,7 @@ function fetchBallot(){
             for(candidate in candidates){
                 $("#voteContainer").append(getRanking(candidate));
             }
+            //TODO allowfor abstaining from vote
             $("#voteContainer").sortable();
         }
         else if(ballotType == "Approval Voting"){
