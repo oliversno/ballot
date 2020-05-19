@@ -69,42 +69,54 @@ function getWinner(candidates){
 
 function getWinnerRanked(candidates, numVotes){
     var majorityWinner = "";
-    var majorityLoser = "";
+    var majorityLosers = [];
     while(majorityWinner == ""){
-        majorityWinner, majorityLoser = simpleMajorityRanked(candidates, numVotes);
+        var res = simpleMajorityRanked(candidates, numVotes);
+        majorityWinner = res[0];
+        majorityLosers = res[1];
         if(majorityWinner != ""){
             return majorityWinner
         }
         // else
-        for(vote in candidates[majorityLoser]){
-            //reaportion
-            var nextCandidate = vote[0];
-            vote.splice(0,1); //remove first element
-            candidates[nextCandidate].push(vote);
+        for(loser in majorityLosers){
+            for(vote in candidates[loser]){
+                //reaportion
+                var nextCandidate = vote[0];
+                while(nextCandidate in majorityLosers){
+                    //while vote will be reaportioned to loser in tie go to next choice
+                    vote.splice(0,1);
+                    nextCandidate = vote[0];
+                }
+                vote.splice(0,1); //remove first element
+                candidates[nextCandidate].push(vote);
+            }
+            candidates[loser] = 0; //clear votes from loser
         }
-        candidates[majorityLoser] = 0; //clear votes from loser
     }
 }
 
 function simpleMajorityRanked(candidates, numTotalVotes){
     var majority = Math.floor(numTotalVotes / 2.0);
     var leastVotes = Number.MAX_SAFE_INTEGER;
-    var leastCandidate = "";
+    var leastCandidates = [];
     for(var key in candidates){
         var numVotes = 0;
         if(candidates[key] != 0){
             numVotes = Object.keys(candidates[key]).length;
             if(numVotes > majority){
-                return key, ""
+                return [key, []]
             }
             // we only care about reapropriating votes if a candidate got votes
-            if(numVotes < leastVotes){
+            if(numVotes == leastVotes){
+                leastCandidates.push(key);
+            }
+            else if(numVotes < leastVotes){
                 leastVotes = numVotes;
-                leastCandidate = key;
+                leastCandidate = [key];
             }
         }
     }
-    return "", leastCandidate
+    return ["", leastCandidates]
 }
 
 </script>
