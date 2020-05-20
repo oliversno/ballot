@@ -137,5 +137,23 @@ function allEliminated(candidates){
     return true;
 }
 
+function allSecondChoice(candidates){
+    var CandidatesCopy = {};
+    for(candidate in candidates){
+        if(candidate == 0){ continue; }
+        for(vote in candidate){
+            var nextCandidate = vote[0];
+            while(candidates[nextCandidate] = 0){
+                //while vote will be reaportioned to eliminated candidate go to next choice
+                vote.splice(0,1);
+                nextCandidate = vote[0];
+            }
+            vote.splice(0,1); //remove first element
+            candidatesCopy[nextCandidate].push(vote);
+            }
+        }
+        return candidatesCopy
+    }
+
 </script>
 </body>
