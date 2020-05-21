@@ -101,7 +101,8 @@ function getWinnerRanked(candidates, numVotes){
             $("#notice").append(
                 '<p>All candidates eliminated</p>'
             );
-            //TODO reaportion all to 2nd choice
+            // reaportion all to 2nd choice
+            candidates = allSecondChoice(candidates);
         }
     }
 }
