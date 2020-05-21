@@ -70,16 +70,18 @@ function getWinner(candidates){
     });
 }
 
-function getWinnerRanked(candidates, numVotes){
+function getWinnerRanked(candidatesOriginal, numVotes){
     var counter = 0;
     var majorityWinner = "";
     var majorityLosers = [];
-    while(majorityWinner == ""){
+    var candidates = JSON.parse(JSON.stringify(candidatesOriginal));
+    var iterations = 5;
+    for(var i = 0; i < iterations; ++i){
         var res = simpleMajorityRanked(candidates, numVotes);
         majorityWinner = res[0];
         majorityLosers = res[1];
         if(majorityWinner != ""){
-            return majorityWinner
+            return majorityWinner;
         }
         // else
         for(key_i in majorityLosers){
@@ -107,7 +109,8 @@ function getWinnerRanked(candidates, numVotes){
                 '<p>All candidates eliminated</p>'
             );
             // reaportion all to 2nd choice
-            candidates = allSecondChoice(candidates);
+            candidates = allSecondChoice(candidatesOriginal);
+            candidatesOriginal = candidates;
         }
     }
 }
@@ -144,23 +147,42 @@ function allEliminated(candidates){
 }
 
 function allSecondChoice(candidates){
-    //TODO bug fix this
-    var CandidatesCopy = {};
-    for(candidate in candidates){
+    var counter = 0;
+    var candidatesCopy = {};
+    for(key_i in candidates){
+        var candidate = candidates[key_i];
+        if(candidatesCopy[key_i] == null){
+            candidatesCopy[key_i] = {};
+        }
         if(candidate == 0){ continue; }
-        for(vote in candidate){
+        for(key_j in candidate){
+            var vote = candidates[key_i][key_j];
             var nextCandidate = vote[0];
-            while(candidates[nextCandidate] = 0){
+            if(nextCandidate == null){ continue; }
+            while(nextCandidate != null && candidates[nextCandidate] == 0){
                 //while vote will be reaportioned to eliminated candidate go to next choice
                 vote.splice(0,1);
                 nextCandidate = vote[0];
             }
+            if(nextCandidate == null){ continue; }
             vote.splice(0,1); //remove first element
-            candidatesCopy[nextCandidate].push(vote);
-            }
+            if(candidatesCopy[nextCandidate] == null){
+                candidatesCopy[nextCandidate] = {};
+             }
+            candidatesCopy[nextCandidate]['newVote' + counter++] = vote;
         }
-        return candidatesCopy
     }
+    return convertEmptyToZereos(candidatesCopy);
+ }
+
+ function convertEmptyToZereos(candidates){
+    for(key in candidates){
+         if(Object.keys(candidates[key]).length == 0){
+             candidates[key] = 0;
+         }
+     }
+     return candidates;
+ }
 
 </script>
 </body>
