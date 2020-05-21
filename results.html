@@ -71,6 +71,7 @@ function getWinner(candidates){
 }
 
 function getWinnerRanked(candidates, numVotes){
+    var counter = 0;
     var majorityWinner = "";
     var majorityLosers = [];
     while(majorityWinner == ""){
@@ -81,18 +82,22 @@ function getWinnerRanked(candidates, numVotes){
             return majorityWinner
         }
         // else
-        for(loser in majorityLosers){
+        for(key_i in majorityLosers){
+            var loser = majorityLosers[key_i];
             //TODO append message to #notices if this is first tie
-            for(vote in candidates[loser]){
+            for(key_j in candidates[loser]){
+                var vote = candidates[loser][key_j]
                 //reaportion
                 var nextCandidate = vote[0];
-                while(candidates[nextCandidate] = 0){
+                if(nextCandidate == null){ continue; }
+                while(nextCandidate != null && candidates[nextCandidate] == 0){
                     //while vote will be reaportioned to eliminated candidate go to next choice
                     vote.splice(0,1);
                     nextCandidate = vote[0];
                 }
+                if(nextCandidate == null){ continue; }
                 vote.splice(0,1); //remove first element
-                candidates[nextCandidate].push(vote);
+                candidates[nextCandidate]['newVote' + counter++] = vote;
             }
             candidates[loser] = 0; //clear votes from loser
         }
@@ -124,7 +129,7 @@ function simpleMajorityRanked(candidates, numTotalVotes){
             }
             else if(numVotes < leastVotes){
                 leastVotes = numVotes;
-                leastCandidate = [key];
+                leastCandidates = [key];
             }
         }
     }
@@ -139,6 +144,7 @@ function allEliminated(candidates){
 }
 
 function allSecondChoice(candidates){
+    //TODO bug fix this
     var CandidatesCopy = {};
     for(candidate in candidates){
         if(candidate == 0){ continue; }
