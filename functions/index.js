@@ -14,12 +14,14 @@ exports.deleteOldItems = functions.database.ref('/ballots/')
     snapshot.ref.remove()
       .then(function(){
         console.log("Removed", snapshot.ref.toString())
-        return
+        return 0; // sucsesfuly removed
       })
       .catch(function(error){
         console.log("Failed to remove", snapshot.ref.toString(), "Error:", error.message)
+        return 1; // error
       });
   });
+  return 0; // everything removed sucsesfully
 });
 
 
