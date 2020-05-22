@@ -12,9 +12,8 @@ exports.deleteOldItems = functions.database.ref('/ballots/')
   console.log("Ballot ref is", ballotRef.toString());
   var query = ballotRef.orderByChild('timeLastUpdated');
   console.log("query is", query.toString());
-  return query.once('value').then(function(data){
-    console.log("key is", data.key);
-    return;
+  query.on('child_added', function(snapshot){
+    console.log("key is " + snapshot.key + " with value of " + snapshot.val());
   });
 });
 
