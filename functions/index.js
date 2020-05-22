@@ -9,11 +9,16 @@ exports.deleteOldItems = functions.database.ref('/ballots/')
   var now = Date.now();
   var cutoff = now - 7 * 24 * 60 * 60 * 1000; //ballot hasn't been voted on in one week
   var ballotRef = change.before.ref;
-  console.log("Ballot ref is", ballotRef.toString());
-  var query = ballotRef.orderByChild('timeLastUpdated');
-  console.log("query is", query.toString());
+  var query = ballotRef.orderByChild('timeLastUpdated').endAt(cutoff);
   query.on('child_added', function(snapshot){
-    console.log("key is " + snapshot.key + " with value of " + snapshot.val());
+    snapshot.ref.remove()
+      .then(function(){
+        console.log("Removed", snapshot.ref.toString())
+        return
+      })
+      .catch(function(error){
+        console.log("Failed to remove", snapshot.ref.toString(), "Error:", error.message)
+      });
   });
 });
 
