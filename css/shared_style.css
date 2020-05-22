@@ -49,3 +49,23 @@ body {
     border: 1px solid;
     border-color: transparent #efe4e4;
 }
+
+.btn {
+    background-color: rgb(204, 51, 31);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 40ms;
+}
+
+.btn:hover {
+    background-color: white;
+    color: rgb(204, 51, 31);
+    border: 2px solid rgb(204, 51, 31);
+    padding: 13px 30px;
+}
