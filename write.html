@@ -4,19 +4,27 @@
 <body>
   <div class="container">
         <form id="make-ballot">
-          <input id="candidateAdd" type="button" value="Add Candidate (+)"><br>
+          <input id="candidateAdd" class="btn" type="button" value="Add Candidate (+)"><br>
           <div id="TextBoxContainer">
             <!-- At least two candidates are required on a ballot -->
             <input required id="candidate" name = "candidateTextBox" type="text"/><br>
             <input required id="candidate" name = "candidateTextBox" type="text"/>
             <!--Textboxes will be added here -->
           </div>
-          <input required type="radio" name="ballotType" id="fptp" value="First Past the Post">
-          <label for="fptp">First Past the Post</label><br>
-          <input required type="radio" name="ballotType" id="ranked-choice" value="Ranked Choice">
-          <label for="ranked-choice">Ranked Choice</label><br>
-          <input required type="radio" name="ballotType" id="approval" value="Approval Voting">
-          <label for="approval">Approval Voting</label><br>
+          <div class="radioButton-wrap">
+            <div class="radioButton">
+              <input required type="radio" name="ballotType" id="fptp" value="First Past the Post">
+              <label for="fptp" class="radio-label">First Past the Post</label><br>
+            </div>
+            <div class="radioButton">
+              <input required type="radio" name="ballotType" id="ranked-choice" value="Ranked Choice">
+              <label for="ranked-choice" class="radio-label">Ranked Choice</label><br>
+            </div>
+            <div class=radioButton>
+             <input required type="radio" name="ballotType" id="approval" value="Approval Voting">
+             <label for="approval" class="radio-label">Approval Voting</label><br>
+           </div>
+          </div>
 
           <button class="btn" type="button" onclick="createBallot(document.getElementById('make-ballot'))">Make ballot!</button>
         </form>
