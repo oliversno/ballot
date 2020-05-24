@@ -1,3 +1,7 @@
+$red: #cc331f;
+$green: #47cc1f;
+$light: #fff;
+$small: 40em;
 body {
     background: -webkit-linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
     background: -moz-linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
@@ -8,7 +12,7 @@ body {
     height: 94%;
  }
 
-.container { /* lined paper effect */
+.container { // lined paper effect 
     font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
     width: 50%;
     height: 80%;
@@ -39,7 +43,7 @@ body {
     width: 816px;
 }
 
-.container::before { /* vertical double line on paper */
+.container::before { // vertical double line on paper 
     content: '';
     position: absolute;
     width: 4px;
@@ -51,9 +55,9 @@ body {
 }
 
 .btn {
-    background-color: rgb(204, 51, 31);
+    background-color: $red;
     border: none;
-    color: white;
+    color: $light;
     padding: 15px 32px;
     border-radius: 4px;
     text-align: center;
@@ -64,12 +68,13 @@ body {
 }
 
 .btn:hover {
-    background-color: white;
-    color: rgb(204, 51, 31);
-    border: 2px solid rgb(204, 51, 31);
+    background-color: $light;
+    color: $red;
+    border: 2px solid $red;
     padding: 13px 30px;
 }
 
+/* Hide default radio buttons */
 .radioButton-wrap input[type="radio"] {
     display: none;
 }
@@ -87,19 +92,15 @@ body {
     padding: 1em 2em;
     margin: 0.5em;
     cursor: pointer;
-    color: $dark;
+    color: $light;
     border-radius: 0.25em;
-    background: $light;
+    background: $red;
     box-shadow: 0 3px 10px rgba(0,0,0,0.2), inset 0 -3px 0 rgba(0,0,0,0.22);
     transition: 0.3s;
     user-select: none;
-    h1 {
-        font-size: 1em;
-        font-family: $font-stack;
-    }
     &:hover {
         background: darken($light, 10%);
-        color: darken($dark, 10%);
+        color: darken($red, 10%);
         box-shadow: 0 3px 10px rgba(0,0,0,0.2), inset 0 -3px 0 rgba(0,0,0,0.32);
     }
     &:active {
@@ -109,5 +110,13 @@ body {
     @media (max-width: $small) {
         padding: 0em 1em 3px;
         margin: 0.25em;
+    }
+}
+
+input[name="ballotType"]:checked + .radio-label {
+    background: $green;
+    &:hover {
+        background: darken($light, 5%);
+        color: darken($red, 5%);
     }
 }
