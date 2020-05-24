@@ -1,0 +1,14 @@
+# Site Settings
+title: ballot
+description: ""
+email: snoliver@umich.edu
+baseurl: "/"
+githubusername: oliversno
+
+# Build Settings
+markdown: kramdown
+
+# Sass Settings
+sass:
+  sass_dir: css
+  style: compressed

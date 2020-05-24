@@ -1,13 +1,17 @@
+//@import "_colors.scss";
+$small: 40em;
 $red: #cc331f;
 $green: #47cc1f;
 $light: #fff;
-$small: 40em;
+$dark: #00000012
+$blue: #88c7c9;
+$light-blue: #cae8eb;
 body {
-    background: -webkit-linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
-    background: -moz-linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
-    background: -ms-linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
-    background: -o-linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
-    background: linear-gradient(top, rgb(136,199,201) 58%, rgb(202,232,235) 100%);
+    background: -webkit-linear-gradient(top, $blue 58%, $light-blue 100%);
+    background: -moz-linear-gradient(top, $blue 58%, $light-blue 100%);
+    background: -ms-linear-gradient(top, $blue 58%, $light-blue 100%);
+    background: -o-linear-gradient(top, $blue 58%, $light-blue 100%);
+    background: linear-gradient(top, $blue 58%, $light-blue 100%);
     padding: 3%;
     height: 94%;
  }
@@ -22,13 +26,13 @@ body {
     color: #444;
     line-height: 20px;
     border: 1px solid #d2d2d2;
-    background: #fff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
-    background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: $light;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, $light)) 0 4px;
+    background: -webkit-linear-gradient(top, #d9eaf3 0%, $light 8%) 0 4px;
+    background: -moz-linear-gradient(top, #d9eaf3 0%, $light 8%) 0 4px;
+    background: -ms-linear-gradient(top, #d9eaf3 0%, $light 8%) 0 4px;
+    background: -o-linear-gradient(top, #d9eaf3 0%, $light 8%) 0 4px;
+    background: linear-gradient(top, #d9eaf3 0%, $light 8%) 0 4px;
     -webkit-background-size: 100% 20px;
     -moz-background-size: 100% 20px;
     -ms-background-size: 100% 20px;
@@ -37,9 +41,9 @@ body {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    -webkit-box-shadow: 0 1px 2px $dark;
+    -moz-box-shadow: 0 1px 2px $dark;
+    box-shadow: 0 1px 2px $dark;
     width: 816px;
 }
 
@@ -114,7 +118,7 @@ body {
 }
 
 input[name="ballotType"]:checked + .radio-label {
-    background: $green;
+    background: rgb;
     &:hover {
         background: darken($light, 5%);
         color: darken($red, 5%);
