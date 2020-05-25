@@ -1,0 +1,108 @@
+body {
+  background: -webkit-linear-gradient(top, #88c7c9 58%, #cae8eb 100%);
+  background: -moz-linear-gradient(top, #88c7c9 58%, #cae8eb 100%);
+  background: -ms-linear-gradient(top, #88c7c9 58%, #cae8eb 100%);
+  background: -o-linear-gradient(top, #88c7c9 58%, #cae8eb 100%);
+  background: linear-gradient(top, #88c7c9 58%, #cae8eb 100%);
+  padding: 3%;
+  height: 94%; }
+
+.container {
+  font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
+  width: 50%;
+  height: 80%;
+  margin: 0 auto;
+  padding: 6px 5px 4px 42px;
+  position: relative;
+  color: #444;
+  line-height: 20px;
+  border: 1px solid #d2d2d2;
+  background: #fff;
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+  background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+  background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+  background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+  background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+  background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+  -webkit-background-size: 100% 20px;
+  -moz-background-size: 100% 20px;
+  -ms-background-size: 100% 20px;
+  -o-background-size: 100% 20px;
+  background-size: 100% 20px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px #00000012;
+  -moz-box-shadow: 0 1px 2px #00000012;
+  box-shadow: 0 1px 2px #00000012;
+  width: 816px; }
+
+.container::before {
+  content: '';
+  position: absolute;
+  width: 4px;
+  top: 0;
+  left: 30px;
+  bottom: 0;
+  border: 1px solid;
+  border-color: transparent #efe4e4; }
+
+.btn {
+  background-color: #cc331f;
+  border: none;
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 40ms; }
+
+.btn:hover {
+  background-color: #fff;
+  color: #cc331f;
+  border: 2px solid #cc331f;
+  padding: 13px 30px; }
+
+/* Hide default radio buttons */
+.radioButton-wrap input[type="radio"] {
+  display: none; }
+
+.radioButton-wrap {
+  position: relative;
+  top: 50%; }
+  @media (max-width: 40em) {
+    .radioButton-wrap {
+      margin-top: -1.5em; } }
+
+.radio-label {
+  display: inline-block;
+  padding: 1em 2em;
+  margin: 0.5em;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 0.25em;
+  background: #cc331f;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
+  user-select: none; }
+  .radio-label:hover {
+    background: #e6e6e6;
+    color: #a02818;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32); }
+  .radio-label:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22); }
+  @media (max-width: 40em) {
+    .radio-label {
+      padding: 0em 1em 3px;
+      margin: 0.25em; } }
+
+input[name="ballotType"]:checked + .radio-label {
+  background: #47cc1f; }
+  input[name="ballotType"]:checked + .radio-label:hover {
+    background: #f2f2f2;
+    color: #b62d1c; }
+
+/*# sourceMappingURL=shared_style.css.map */

@@ -80,9 +80,7 @@ body {
 
 .radioButton-wrap {
     position: relative;
-    text-align: center;
     top: 50%;
-    margin-top: -2.5em;
     @media (max-width: $small) {margin-top: -1.5em;}
   }
   
@@ -113,7 +111,7 @@ body {
 }
 
 input[name="ballotType"]:checked + .radio-label {
-    background: rgb;
+    background: $green;
     &:hover {
         background: darken($light, 5%);
         color: darken($red, 5%);
