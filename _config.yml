@@ -9,7 +9,7 @@ githubusername: oliversno
 markdown: kramdown
 
 # Sass Settings
-exclude: [".sass-cache/", "_site/", "functions/", "node_modules/", ".firebaserc", "database.rules.json", "firebase.json"]
+exclude: ["sass/" ,".sass-cache/", "_site/", "functions/", "node_modules/", ".firebaserc", "database.rules.json", "firebase.json"]
 sass:
   sass_dir: sass
   style: compressed

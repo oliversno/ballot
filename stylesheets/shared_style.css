@@ -9,8 +9,8 @@ body {
 
 .container {
   font: normal 12px/1.5 "Lucida Grande", arial, sans-serif;
-  width: 50%;
-  height: 80%;
+  width: 70%;
+  height: 85%;
   margin: 0 auto;
   padding: 6px 5px 4px 42px;
   position: relative;
@@ -35,7 +35,8 @@ body {
   -webkit-box-shadow: 0 1px 2px #00000012;
   -moz-box-shadow: 0 1px 2px #00000012;
   box-shadow: 0 1px 2px #00000012;
-  width: 816px; }
+  width: 816px;
+  overflow: auto; }
 
 .container::before {
   content: '';
