@@ -1,0 +1,15 @@
+svg {
+  box-sizing: border-box;
+  padding: 20px;
+  width: 100%;
+  background: #fff;
+  display: block;
+  margin: 0 auto; }
+
+rect {
+  position: relative;
+  fill: #3d3bc5;
+  stroke-width: 1px;
+  stroke: #fff; }
+
+/*# sourceMappingURL=charts.css.map */
