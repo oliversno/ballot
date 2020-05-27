@@ -52,6 +52,7 @@ function fetchResults(){
         if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
             for(var key in candidates){
                 $("#displayRawData").append(getVotes(key, candidates[key]));
+                barChart();
             }
             $("#displayWinner").append(
                 '<h1>The Winnner is: ' + getWinner(candidates) + '</h1>');
@@ -73,6 +74,42 @@ function getWinner(candidates){
     });
 }
 
+function barChart(){
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('height', `${500}px`);
+    svg.setAttribute('width', `${500}px`);
+    svg.setAttribute('viewBox', `0 0 500 500`);
+
+    const TestData = new Array(10)
+        .fill(0)
+        .map(
+            () =>
+            parseInt(
+                100* (Math.random()+1),
+                10
+            ),
+    );
+
+    function generateChart(data){
+        const barChartElems = [];
+
+        const create = (data) => {
+        data.forEach((entry, index) => {
+            const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            bar.setAttribute('x', index * (500 / data.length));
+            bar.setAttribute('y', 500 - 0);
+            bar.setAttribute('height', `${0}px`);
+            bar.setAttribute('width', `${500 / data.length}px`);
+            bar.setAttribute('style', 'transition: 0.5s all;');
+            svg.appendChild(bar);
+            barChartElems.push(bar);
+            });
+        };
+        return create(data)
+    }
+    document.getElementById("displayRawData").appendChild(svg);
+    const updateChart = generateChart(TestData);
+}
 function getWinnerRanked(candidatesOriginal, numVotes){
     var counter = 0;
     var majorityWinner = "";
