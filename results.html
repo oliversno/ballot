@@ -105,7 +105,27 @@ function barChart(){
             barChartElems.push(bar);
             });
         };
-        return create(data)
+        const update = (newData) => {
+            if (newData.length > barChartElems.length) {
+            create(newData.filter(((e, i) => i > barChartElems.length - 1)));
+            }
+        
+            newData.forEach((newEntry, index) => {
+            if (index > barChartElems.length - 1) return;
+
+            const bar = barChartElems[index];
+            bar.setAttribute('x', index * (500 / newData.length));
+            bar.setAttribute('width', `${500 / newData.length}px`);
+        
+            setTimeout(() => {
+                bar.setAttribute('y', 500 - newEntry);
+                bar.setAttribute('height', `${newEntry}px`);
+            }, 100 * index);
+            });
+        };
+        create(data);
+        update(data);
+        return update;
     }
     document.getElementById("displayRawData").appendChild(svg);
     const updateChart = generateChart(TestData);
