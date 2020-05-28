@@ -55,7 +55,7 @@ function fetchResults(){
             }
             barChart(Object.keys(candidates).map(function(key){
                 return candidates[key];
-            }))
+            }), Object.keys(candidates))
             $("#displayWinner").append(
                 '<h1>The Winnner is: ' + getWinner(candidates) + '</h1>');
         }
@@ -76,33 +76,38 @@ function getWinner(candidates){
     });
 }
 
-function barChart(data){
+function barChart(data, labels){
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('height', `${500}px`);
     svg.setAttribute('width', `${500}px`);
     svg.setAttribute('viewBox', `0 0 500 500`);
 
-    function generateChart(data){
+    function generateChart(data, labels){
         const barChartElems = [];
 
-        const create = (data) => {
+        const create = (data, labels) => {
             var max = Math.max.apply(Math, data);
             const scale = 400/max;
         data.forEach((entry, index) => {
             const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             bar.setAttribute('x', index * (500 / data.length));
             var height = entry*scale;
-            bar.setAttribute('y', 500 - height);
+            bar.setAttribute('y', 450 - height);
             bar.setAttribute('height', `${height}px`);
             bar.setAttribute('width', `${500 / data.length}px`);
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.textContent = labels[index] + ': ' + entry;
+            text.setAttribute('x', (index+0.5) * (500 / data.length));
+            text.setAttribute('y', 475);
             svg.appendChild(bar);
+            svg.appendChild(text);
             barChartElems.push(bar);
             });
         };
-        return create(data);
+        return create(data, labels);
     }
     document.getElementById("displayRawData").appendChild(svg);
-    const updateChart = generateChart(data);
+    const updateChart = generateChart(data, labels);
 }
 function getWinnerRanked(candidatesOriginal, numVotes){
     var counter = 0;
