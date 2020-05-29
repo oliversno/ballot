@@ -50,9 +50,6 @@ function fetchResults(){
         var numVotes = (snapshot.val() && snapshot.val().numVotes);
         if(numVotes == null){ numVotesError(); }
         if(ballotType == "First Past the Post" || ballotType == "Approval Voting"){
-            for(var key in candidates){
-                $("#displayRawData").append(getVotes(key, candidates[key]));
-            }
             barChart(Object.keys(candidates).map(function(key){
                 return candidates[key];
             }), Object.keys(candidates))
@@ -60,6 +57,13 @@ function fetchResults(){
                 '<h1>The Winnner is: ' + getWinner(candidates) + '</h1>');
         }
         else{ //ranked choice
+            for(key_i in candidates){
+                for(key_j in candidates[key_i]){
+                    printBallot([key_i].concat(candidates[key_i][key_j]));
+                }
+            }
+            $("#displayRawData").append('<p>'+numVotes+' ballots cast total</p>');
+
             $("#displayWinner").append(
                 '<h1>The Winnner is: ' + getWinnerRanked(candidates, numVotes) + '</h1>');
         }
@@ -109,6 +113,13 @@ function barChart(data, labels){
     document.getElementById("displayRawData").appendChild(svg);
     const updateChart = generateChart(data, labels);
 }
+
+function printBallot(ballot){
+    var text = '<p>One Ballot cast for ' + ballot + '</p>';
+    $("#displayRawData").append(text);
+}
+
+
 function getWinnerRanked(candidatesOriginal, numVotes){
     var counter = 0;
     var majorityWinner = "";
